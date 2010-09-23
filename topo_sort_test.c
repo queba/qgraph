@@ -15,7 +15,7 @@ int main()
   if (g) {
     SList *sorted_list;
 
-    graph_vertex_t *under, *pants, *belt, *jacket, *shirt, *tie, *socks, *shoes;
+    graph_vertex_t under, pants, belt, jacket, shirt, tie, socks, shoes;
     under = qgraph_add_vertex(g, "undershorts");
     pants = qgraph_add_edge_v(g, under, "pants");
     belt = qgraph_add_edge_v(g, pants, "belt");
