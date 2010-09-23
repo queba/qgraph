@@ -17,6 +17,11 @@ struct _graph_vertex_t {
 
 typedef struct _graph_vertex_t * graph_vertex_t;
 
+struct _adj_list_entry {
+  graph_vertex_t v;  
+  int weight;
+};
+
 typedef struct _graph_t {
   int v_num; // number of vertices
   int e_num; // number of edges
@@ -37,11 +42,22 @@ qgraph_del(graph_t *g, int del_data);
 graph_vertex_t
 qgraph_add_vertex(graph_t * g, void *value);
 
-/* add an edge to this graph. whether this edge is directional depends on
- * the intention of the api user
+/* add a weighted edge to this graph. whether this edge is directional depends
+ * on the intention of the api user.
+ */
+void
+qgraph_add_w_edge(graph_t *g, graph_vertex_t from, graph_vertex_t to, int w);
+
+/* add an unweighted edge to this graph. whether this edge is directional
+ * depends on the intention of the api user.
  */
 void
 qgraph_add_edge(graph_t *g, graph_vertex_t from, graph_vertex_t to);
+
+/* shortcut method by combining the operations of adding a new vertex and adding
+ * an edge. the newly-added vertex is returned as a pointer */
+graph_vertex_t
+qgraph_add_w_edge_v(graph_t *g, graph_vertex_t from, void *to_val, int w);
 
 /* shortcut method by combining the operations of adding a new vertex and adding
  * an edge. the newly-added vertex is returned as a pointer */

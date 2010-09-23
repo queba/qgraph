@@ -5,8 +5,16 @@
 static void *
 del_vertex(SList *item, void *del_data)
 {
+  SList *cur;
   int should_del_data = *(int *)del_data;
   graph_vertex_t v = (graph_vertex_t)slist_unbox(item);
+  cur = v->adj_list;
+  while (cur) {
+    SList *next = cur->next;
+    free((void *)cur->userdata);
+    free(cur);
+    cur = next;
+  }
   if (should_del_data) {
     free((void *)v->data);
   }
@@ -46,25 +54,43 @@ qgraph_add_vertex(graph_t *g, void *value)
 }
 
 void
+qgraph_add_w_edge(graph_t *g, graph_vertex_t from, graph_vertex_t to, int w)
+{
+  struct _adj_list_entry *e;
+  e = (struct _adj_list_entry *)malloc(sizeof(struct _adj_list_entry));
+  if (e) {
+    e->v = to;
+    e->weight = w;
+    if (from->adj_list) {
+      from->adj_list = slist_concat(from->adj_list, slist_box(e));
+    } else {
+      from->adj_list = slist_box(e);
+    }
+    g->e_num++;
+  }
+}
+
+void
 qgraph_add_edge(graph_t *g, graph_vertex_t from, graph_vertex_t to)
 {
-  if (from->adj_list) {
-    from->adj_list = slist_concat(from->adj_list, slist_box(to));
-  } else {
-    from->adj_list = slist_box(to);
+  qgraph_add_w_edge(g, from, to, 0);
+}
+
+graph_vertex_t
+qgraph_add_w_edge_v(graph_t *g, graph_vertex_t from, void *to_val, int w)
+{
+  graph_vertex_t to = NULL;
+  to = qgraph_add_vertex(g, to_val);
+  if (to) {
+    qgraph_add_w_edge(g, from, to, w);
   }
-  g->e_num++;
+  return to;
 }
 
 graph_vertex_t
 qgraph_add_edge_v(graph_t *g, graph_vertex_t from, void *to_val)
 {
-  graph_vertex_t to = NULL;
-  to = qgraph_add_vertex(g, to_val);
-  if (to) {
-    qgraph_add_edge(g, from, to);
-  }
-  return to;
+  return qgraph_add_w_edge_v(g, from, to_val, 0);
 }
 
 void
