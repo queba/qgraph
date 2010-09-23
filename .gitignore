@@ -1,0 +1,4 @@
+.scons*
+*.swp
+*.o
+*_test
