@@ -1,4 +1,4 @@
-#include "graph.h"
+#include "qgraph.h"
 #include <string.h>
 #include <stdlib.h>
 

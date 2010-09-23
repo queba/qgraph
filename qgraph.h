@@ -28,29 +28,42 @@ typedef void (*qgraph_discover_visitor)(graph_vertex_t, int time, void *arg);
 
 typedef void (*qgraph_finish_visitor)(graph_vertex_t, int time, void *arg);
 
-graph_t *qgraph_new(void);
+graph_t *
+qgraph_new(void);
 
-void qgraph_del(graph_t *g, int del_data);
+void
+qgraph_del(graph_t *g, int del_data);
 
-graph_vertex_t qgraph_add_vertex(graph_t * g, void *value);
+graph_vertex_t
+qgraph_add_vertex(graph_t * g, void *value);
 
 /* add an edge to this graph. whether this edge is directional depends on
  * the intention of the api user
  */
-void qgraph_add_edge(graph_t *g, graph_vertex_t from, graph_vertex_t to);
+void
+qgraph_add_edge(graph_t *g, graph_vertex_t from, graph_vertex_t to);
 
 /* shortcut method by combining the operations of adding a new vertex and adding
  * an edge. the newly-added vertex is returned as a pointer */
-graph_vertex_t qgraph_add_edge_v(graph_t *g, graph_vertex_t from,
-    void *to_val);
+graph_vertex_t
+qgraph_add_edge_v(graph_t *g, graph_vertex_t from, void *to_val);
 
-void qgraph_bfs(graph_t *g, graph_vertex_t s, qgraph_discover_visitor dvisitor,
+void
+qgraph_bfs(graph_t *g, graph_vertex_t s, qgraph_discover_visitor dv, void *arg);
+
+void
+qgraph_dfs(graph_t *g, qgraph_discover_visitor dv, qgraph_finish_visitor fv,
     void *arg);
 
-void qgraph_dfs(graph_t *g, qgraph_discover_visitor visitor,
-    qgraph_finish_visitor fvisitor, void *arg);
+/*
+ * topologically sort the graph by calling dfs. the caller should be responsible
+ * for freeing the returned list object.
+ */
+SList *
+qgraph_topo_sort(graph_t *g);
 
-SList * qgraph_topo_sort(graph_t *g);
+graph_t *
+qgraph_mst_kruskal(graph_t *g);
 
 #ifdef __cplusplus
 }

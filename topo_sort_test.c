@@ -1,4 +1,4 @@
-#include "graph.h"
+#include "qgraph.h"
 #include <stdio.h>
 
 static void *
