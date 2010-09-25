@@ -51,7 +51,8 @@ qgraph_mst_kruskal(struct qgraph *g)
     for (v = g->vertices; g; g = g->next) {
       SList *vv;
       djsets_make_set(djs, ((struct qgraph_vertex *)v->userdata)->seq);
-      for (vv = ((struct qgraph_vertex *)v->userdata)->adj_list; vv; vv = vv->next) {
+      for (vv = ((struct qgraph_vertex *)v->userdata)->adj_list; vv;
+          vv = vv->next) {
         struct _adj_list_entry *vve;
         struct qgraph_vertex *dst_v;
         edge_t *e = &edges[i++];

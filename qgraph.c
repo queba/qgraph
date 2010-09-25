@@ -54,7 +54,8 @@ qgraph_add_vertex(struct qgraph *g, void *value)
 }
 
 void
-qgraph_add_w_edge(struct qgraph *g, struct qgraph_vertex * from, struct qgraph_vertex  *to, int w)
+qgraph_add_w_edge(struct qgraph *g, struct qgraph_vertex * from,
+    struct qgraph_vertex  *to, int w)
 {
   struct _adj_list_entry *e;
   e = (struct _adj_list_entry *)malloc(sizeof(struct _adj_list_entry));
@@ -71,13 +72,15 @@ qgraph_add_w_edge(struct qgraph *g, struct qgraph_vertex * from, struct qgraph_v
 }
 
 void
-qgraph_add_edge(struct qgraph *g, struct qgraph_vertex * from, struct qgraph_vertex * to)
+qgraph_add_edge(struct qgraph *g, struct qgraph_vertex * from,
+    struct qgraph_vertex * to)
 {
   qgraph_add_w_edge(g, from, to, 0);
 }
 
 struct qgraph_vertex *
-qgraph_add_w_edge_v(struct qgraph *g, struct qgraph_vertex * from, void *to_val, int w)
+qgraph_add_w_edge_v(struct qgraph *g, struct qgraph_vertex * from, void *to_val,
+    int w)
 {
   struct qgraph_vertex * to = NULL;
   to = qgraph_add_vertex(g, to_val);
@@ -94,8 +97,8 @@ qgraph_add_edge_v(struct qgraph *g, struct qgraph_vertex * from, void *to_val)
 }
 
 void
-qgraph_bfs(struct qgraph *g, struct qgraph_vertex * s, qgraph_discover_visitor dvisitor,
-    void *arg) {
+qgraph_bfs(struct qgraph *g, struct qgraph_vertex * s, qgraph_discover_visitor
+    dvisitor, void *arg) {
   int i, qsize = 0;
   SList *q; /* TODO this slist lacks a tail, making it inefficient as a queue */
   struct qgraph_vertex * cur;
@@ -163,8 +166,8 @@ qgraph_dfs_recursive(struct qgraph_vertex * v, short *state, int *time,
 }
 
 void
-qgraph_dfs(struct qgraph *g, qgraph_discover_visitor dv, qgraph_finish_visitor fv,
-    void *arg)
+qgraph_dfs(struct qgraph *g, qgraph_discover_visitor dv,
+    qgraph_finish_visitor fv, void *arg)
 {
   short *state;
   int time = 0;

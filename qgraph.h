@@ -33,9 +33,11 @@ typedef struct _edge_t {
   int weight;
 } edge_t;
 
-typedef void (*qgraph_discover_visitor)(struct qgraph_vertex *, int time, void *arg);
+typedef void (*qgraph_discover_visitor)(struct qgraph_vertex *, int time,
+    void *arg);
 
-typedef void (*qgraph_finish_visitor)(struct qgraph_vertex *, int time, void *arg);
+typedef void (*qgraph_finish_visitor)(struct qgraph_vertex *, int time,
+    void *arg);
 
 struct qgraph *
 qgraph_new(void);
@@ -50,18 +52,21 @@ qgraph_add_vertex(struct qgraph * g, void *value);
  * on the intention of the api user.
  */
 void
-qgraph_add_w_edge(struct qgraph *g, struct qgraph_vertex * from, struct qgraph_vertex * to, int w);
+qgraph_add_w_edge(struct qgraph *g, struct qgraph_vertex * from,
+    struct qgraph_vertex * to, int w);
 
 /* add an unweighted edge to this graph. whether this edge is directional
  * depends on the intention of the api user.
  */
 void
-qgraph_add_edge(struct qgraph *g, struct qgraph_vertex * from, struct qgraph_vertex * to);
+qgraph_add_edge(struct qgraph *g, struct qgraph_vertex * from,
+    struct qgraph_vertex * to);
 
 /* shortcut method by combining the operations of adding a new vertex and adding
  * an edge. the newly-added vertex is returned as a pointer */
 struct qgraph_vertex *
-qgraph_add_w_edge_v(struct qgraph *g, struct qgraph_vertex * from, void *to_val, int w);
+qgraph_add_w_edge_v(struct qgraph *g, struct qgraph_vertex * from, void *to_val,
+    int w);
 
 /* shortcut method by combining the operations of adding a new vertex and adding
  * an edge. the newly-added vertex is returned as a pointer */
@@ -69,11 +74,12 @@ struct qgraph_vertex *
 qgraph_add_edge_v(struct qgraph *g, struct qgraph_vertex * from, void *to_val);
 
 void
-qgraph_bfs(struct qgraph *g, struct qgraph_vertex * s, qgraph_discover_visitor dv, void *arg);
+qgraph_bfs(struct qgraph *g, struct qgraph_vertex * s,
+    qgraph_discover_visitor dv, void *arg);
 
 void
-qgraph_dfs(struct qgraph *g, qgraph_discover_visitor dv, qgraph_finish_visitor fv,
-    void *arg);
+qgraph_dfs(struct qgraph *g, qgraph_discover_visitor dv,
+    qgraph_finish_visitor fv, void *arg);
 
 /*
  * topologically sort the graph by calling dfs. the caller should be responsible
