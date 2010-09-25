@@ -9,25 +9,23 @@ extern "C" {
 
 // digraph represented by adjacency lists
 
-struct _graph_vertex_t {
+struct qgraph_vertex {
   SList      *adj_list;
   int         seq;
   const void *data;
 };
 
-typedef struct _graph_vertex_t * graph_vertex_t;
-
 struct _adj_list_entry {
-  graph_vertex_t v;  
+  struct qgraph_vertex * v;  
   int weight;
 };
 
-typedef struct _graph_t {
+struct qgraph {
   int v_num; // number of vertices
   int e_num; // number of edges
 
   SList *vertices;
-} graph_t;
+};
 
 typedef struct _edge_t {
   int src_seq;
@@ -35,46 +33,46 @@ typedef struct _edge_t {
   int weight;
 } edge_t;
 
-typedef void (*qgraph_discover_visitor)(graph_vertex_t, int time, void *arg);
+typedef void (*qgraph_discover_visitor)(struct qgraph_vertex *, int time, void *arg);
 
-typedef void (*qgraph_finish_visitor)(graph_vertex_t, int time, void *arg);
+typedef void (*qgraph_finish_visitor)(struct qgraph_vertex *, int time, void *arg);
 
-graph_t *
+struct qgraph *
 qgraph_new(void);
 
 void
-qgraph_del(graph_t *g, int del_data);
+qgraph_del(struct qgraph *g, int del_data);
 
-graph_vertex_t
-qgraph_add_vertex(graph_t * g, void *value);
+struct qgraph_vertex *
+qgraph_add_vertex(struct qgraph * g, void *value);
 
 /* add a weighted edge to this graph. whether this edge is directional depends
  * on the intention of the api user.
  */
 void
-qgraph_add_w_edge(graph_t *g, graph_vertex_t from, graph_vertex_t to, int w);
+qgraph_add_w_edge(struct qgraph *g, struct qgraph_vertex * from, struct qgraph_vertex * to, int w);
 
 /* add an unweighted edge to this graph. whether this edge is directional
  * depends on the intention of the api user.
  */
 void
-qgraph_add_edge(graph_t *g, graph_vertex_t from, graph_vertex_t to);
+qgraph_add_edge(struct qgraph *g, struct qgraph_vertex * from, struct qgraph_vertex * to);
 
 /* shortcut method by combining the operations of adding a new vertex and adding
  * an edge. the newly-added vertex is returned as a pointer */
-graph_vertex_t
-qgraph_add_w_edge_v(graph_t *g, graph_vertex_t from, void *to_val, int w);
+struct qgraph_vertex *
+qgraph_add_w_edge_v(struct qgraph *g, struct qgraph_vertex * from, void *to_val, int w);
 
 /* shortcut method by combining the operations of adding a new vertex and adding
  * an edge. the newly-added vertex is returned as a pointer */
-graph_vertex_t
-qgraph_add_edge_v(graph_t *g, graph_vertex_t from, void *to_val);
+struct qgraph_vertex *
+qgraph_add_edge_v(struct qgraph *g, struct qgraph_vertex * from, void *to_val);
 
 void
-qgraph_bfs(graph_t *g, graph_vertex_t s, qgraph_discover_visitor dv, void *arg);
+qgraph_bfs(struct qgraph *g, struct qgraph_vertex * s, qgraph_discover_visitor dv, void *arg);
 
 void
-qgraph_dfs(graph_t *g, qgraph_discover_visitor dv, qgraph_finish_visitor fv,
+qgraph_dfs(struct qgraph *g, qgraph_discover_visitor dv, qgraph_finish_visitor fv,
     void *arg);
 
 /*
@@ -82,10 +80,10 @@ qgraph_dfs(graph_t *g, qgraph_discover_visitor dv, qgraph_finish_visitor fv,
  * for freeing the returned list object.
  */
 SList *
-qgraph_topo_sort(graph_t *g);
+qgraph_topo_sort(struct qgraph *g);
 
-graph_t *
-qgraph_mst_kruskal(graph_t *g);
+struct qgraph *
+qgraph_mst_kruskal(struct qgraph *g);
 
 #ifdef __cplusplus
 }

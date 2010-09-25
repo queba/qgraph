@@ -10,12 +10,13 @@ print_elem(SList *item, void *userdata)
 
 int main()
 {
-  graph_t *g;
+  struct qgraph *g;
   g = qgraph_new();
   if (g) {
     SList *sorted_list;
 
-    graph_vertex_t under, pants, belt, jacket, shirt, tie, socks, shoes;
+    struct qgraph_vertex *under, *pants, *belt, *jacket, *shirt, *tie, *socks,
+                         *shoes;
     under = qgraph_add_vertex(g, "undershorts");
     pants = qgraph_add_edge_v(g, under, "pants");
     belt = qgraph_add_edge_v(g, pants, "belt");

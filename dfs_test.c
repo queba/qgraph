@@ -2,23 +2,23 @@
 #include <stdio.h>
 
 void
-simple_discover_visit(graph_vertex_t v, int time, void *arg)
+simple_discover_visit(struct qgraph_vertex * v, int time, void *arg)
 {
   printf(" %s ", (char *)v->data, time);
 }
 
 void
-simple_finish_visit(graph_vertex_t v, int ftime, void *arg)
+simple_finish_visit(struct qgraph_vertex * v, int ftime, void *arg)
 {
   printf(" %s ", (char *)v->data, ftime);
 }
 
 int main()
 {
-  graph_t *g;
+  struct qgraph *g;
 
   if ((g = qgraph_new()) != NULL) {
-    graph_vertex_t s, w, z, t, x, y, u, v;
+    struct qgraph_vertex *s, *w, *z, *t, *x, *y, *u, *v;
     s = qgraph_add_vertex(g, "s");
     z = qgraph_add_edge_v(g, s, "z");
     w = qgraph_add_edge_v(g, s, "w");

@@ -28,10 +28,10 @@ _edge_comp(void *k1, void *k2)
   return e1->weight - e2->weight;
 }
 
-graph_t *
-qgraph_mst_kruskal(graph_t *g)
+struct qgraph *
+qgraph_mst_kruskal(struct qgraph *g)
 {
-  graph_t *r = NULL;
+  struct qgraph *r = NULL;
   if (r = qgraph_new()) {
     SList *v;
     struct djsets *djs;
@@ -50,14 +50,14 @@ qgraph_mst_kruskal(graph_t *g)
 
     for (v = g->vertices; g; g = g->next) {
       SList *vv;
-      djsets_make_set(djs, ((graph_vertex_t)v->userdata)->seq);
-      for (vv = ((graph_vertex_t)v->userdata)->adj_list; vv; vv = vv->next) {
+      djsets_make_set(djs, ((struct qgraph_vertex *)v->userdata)->seq);
+      for (vv = ((struct qgraph_vertex *)v->userdata)->adj_list; vv; vv = vv->next) {
         struct _adj_list_entry *vve;
-        graph_vertex_t dst_v;
+        struct qgraph_vertex *dst_v;
         edge_t *e = &edges[i++];
         vve = (struct _adj_list_entry *)vv->userdata;
-        dst_v = (graph_vertex_t)vve->v;
-        e->src = ((graph_vertex_t)v->userdata)->seq;
+        dst_v = (struct qgraph_vertex *)vve->v;
+        e->src = ((struct qgraph_vertex *)v->userdata)->seq;
         e->dst = dst->seq;
         e->weight = vve->weight;
       }
