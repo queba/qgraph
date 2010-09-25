@@ -29,6 +29,12 @@ typedef struct _graph_t {
   SList *vertices;
 } graph_t;
 
+typedef struct _edge_t {
+  int src_seq;
+  int dst_seq;
+  int weight;
+} edge_t;
+
 typedef void (*qgraph_discover_visitor)(graph_vertex_t, int time, void *arg);
 
 typedef void (*qgraph_finish_visitor)(graph_vertex_t, int time, void *arg);
